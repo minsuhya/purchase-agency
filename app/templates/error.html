@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}오류 발생 - 해외 상품 수집 프로토타입{% endblock %}
+
+{% block content %}
+<div class="flex justify-center">
+    <div class="w-full md:w-3/4 lg:w-2/3 xl:w-1/2">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden border-t-4 border-danger">
+            <div class="bg-danger text-white p-4">
+                <h2 class="text-xl font-semibold m-0">오류가 발생했습니다</h2>
+            </div>
+            <div class="p-6">
+                <div class="bg-danger-light/20 border-l-4 border-danger rounded-md p-4 mb-6">
+                    <p class="m-0 text-danger-dark">{{ error }}</p>
+                </div>
+                <div class="text-center">
+                    <a href="/product/" class="inline-block bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded-md transition duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        다시 시도하기
+                    </a>
+                </div>
+            </div>
+            <div class="bg-gray-50 p-4 border-t border-gray-100">
+                <div class="text-sm text-gray-600">
+                    <p class="font-semibold mb-2">가능한 해결 방법:</p>
+                    <ul class="pl-5 list-disc">
+                        <li class="mb-1">다른 상품 URL을 시도해보세요.</li>
+                        <li class="mb-1">지원되는 쇼핑몰인지 확인하세요 (Amazon, eBay 등).</li>
+                        <li class="mb-1">인터넷 연결을 확인하세요.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

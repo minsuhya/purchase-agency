@@ -1,0 +1,85 @@
+/* 사용자 정의 애니메이션 및 효과 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* 홈페이지 요소 스타일링 */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 80% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+  z-index: 0;
+}
+
+.feature-card {
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-icon {
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+  transform: scale(1.1);
+}
+
+/* 애니메이션 지연 설정 */
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+/* 커스텀 버튼 스타일 */
+.btn-primary-gradient {
+  background-image: linear-gradient(to right, var(--tw-color-primary), var(--tw-color-primary-dark));
+  transition: all 0.3s ease;
+}
+
+.btn-primary-gradient:hover {
+  background-image: linear-gradient(to right, var(--tw-color-primary-dark), var(--tw-color-primary));
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);
+}
+
+/* 반응형 그리드 개선 */
+@media (max-width: 640px) {
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 스크롤 애니메이션 */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease-out;
+}
+
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+} 

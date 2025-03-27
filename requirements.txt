@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+jinja2
+httpx
+python-dotenv
+aiohttp
+pydantic
+beautifulsoup4
+lxml
+requests
+Pillow
+python-multipart
+openai
+loguru

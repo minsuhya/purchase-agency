@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+
+{% block title %}상품 정보 - {{ original_info.title.original }}{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <nav class="flex" aria-label="breadcrumb">
+        <ol class="flex space-x-2">
+            <li><a href="/" class="text-primary hover:text-primary-dark">홈</a></li>
+            <li class="text-gray-500">/</li>
+            <li><a href="/product/" class="text-primary hover:text-primary-dark">상품 수집</a></li>
+            <li class="text-gray-500">/</li>
+            <li class="text-gray-700">상품 정보</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+            <div class="p-0">
+                {% if original_info.main_image %}
+                <img src="{{ original_info.main_image.url }}" 
+                     alt="{{ original_info.main_image.alt }}" 
+                     class="w-full h-auto object-contain product-image">
+                {% else %}
+                <div class="flex items-center justify-center bg-gray-100 h-80">
+                    <p class="text-gray-500">이미지 없음</p>
+                </div>
+                {% endif %}
+            </div>
+            {% if original_info.images %}
+            <div class="bg-gray-50 p-2 border-t border-gray-100">
+                <div class="flex flex-wrap">
+                    {% for image in original_info.images %}
+                    <img src="{{ image.url }}" 
+                         alt="{{ image.alt }}" 
+                         class="thumbnail">
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+            <div class="flex justify-between items-center p-4 border-b border-gray-100">
+                <div class="flex items-center">
+                    <h2 class="text-lg font-semibold">상품 기본 정보</h2>
+                    {% if from_cache %}
+                    <span class="ml-2 bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">캐시됨</span>
+                    {% endif %}
+                </div>
+                <div class="space-x-2">
+                    <a href="{{ original_info.url }}" target="_blank" class="inline-block bg-white border border-primary text-primary px-3 py-1 rounded text-sm hover:bg-primary hover:text-white transition duration-200">
+                        원본 페이지
+                    </a>
+                    <button id="export-json" class="inline-block bg-success text-white px-3 py-1 rounded text-sm hover:bg-success-dark transition duration-200">
+                        JSON 내보내기
+                    </button>
+                    <a href="/product/scrape" 
+                       onclick="event.preventDefault(); document.getElementById('refresh-form').submit();" 
+                       class="inline-block bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition duration-200">
+                        새로고침
+                    </a>
+                    <form id="refresh-form" action="/product/scrape" method="post" class="hidden">
+                        <input type="hidden" name="product_url" value="{{ original_info.url }}">
+                        <input type="hidden" name="force_refresh" value="true">
+                    </form>
+                </div>
+            </div>
+            <div class="p-5">
+                <div class="mb-5">
+                    <h3 class="text-base font-medium mb-2">상품명</h3>
+                    <div class="original-text">
+                        {{ original_info.title.original }}
+                    </div>
+                    <div class="translated-text">
+                        {{ translated_info.title.translated }}
+                    </div>
+                </div>
+                
+                {% if original_info.brand %}
+                <div class="mb-5">
+                    <h3 class="text-base font-medium mb-2">브랜드</h3>
+                    <p>{{ original_info.brand }}</p>
+                </div>
+                {% endif %}
+                
+                <div class="mb-5">
+                    <h3 class="text-base font-medium mb-2">가격</h3>
+                    <div class="flex justify-between">
+                        <p class="mb-1">원래 가격: {{ original_info.price.original }}</p>
+                        <p class="mb-1 font-bold">원화: ₩{{ translated_info.price.krw }}</p>
+                    </div>
+                </div>
+                
+                {% if original_info.categories %}
+                <div class="mb-5">
+                    <h3 class="text-base font-medium mb-2">카테고리</h3>
+                    <div class="flex flex-wrap">
+                        {% for category in original_info.categories %}
+                        <span class="bg-gray-200 text-gray-700 px-2 py-1 rounded text-sm mr-1 mb-1">{{ category }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        {% if original_info.options %}
+        <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+            <div class="p-4 border-b border-gray-100">
+                <h3 class="text-base font-medium">옵션 정보</h3>
+            </div>
+            <div class="p-5">
+                {% for option in original_info.options %}
+                <div class="mb-4">
+                    <h4 class="text-sm font-medium mb-2">{{ option.title }}</h4>
+                    <div class="flex flex-wrap">
+                        {% if option.option_values and option.option_values is iterable %}
+                            {% for value in option.option_values %}
+                                <span class="bg-gray-100 text-gray-800 px-3 py-2 rounded mr-1 mb-1 text-sm">{{ value }}</span>
+                            {% endfor %}
+                        {% elif option.get("option_values") and option.get("option_values") is iterable %}
+                            {% for value in option.get("option_values") %}
+                                <span class="bg-gray-100 text-gray-800 px-3 py-2 rounded mr-1 mb-1 text-sm">{{ value }}</span>
+                            {% endfor %}
+                        {% else %}
+                            <span class="bg-yellow-100 text-yellow-800 px-3 py-2 rounded mr-1 mb-1 text-sm">옵션 값을 표시할 수 없습니다</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+    <div class="p-4 border-b border-gray-100">
+        <h3 class="text-base font-medium">상품 설명</h3>
+    </div>
+    <div class="p-5">
+        <div class="original-text">
+            {{ original_info.description.original|linebreaks }}
+        </div>
+        <div class="translated-text">
+            {{ translated_info.description.translated|linebreaks }}
+        </div>
+    </div>
+</div>
+
+{% if original_info.specifications and original_info.specifications.original %}
+<div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+    <div class="p-4 border-b border-gray-100">
+        <h3 class="text-base font-medium">상품 사양</h3>
+    </div>
+    <div class="p-5">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <h4 class="text-sm font-medium mb-3">원문</h4>
+                <div class="divide-y divide-gray-100">
+                    {% for key, value in original_info.specifications.original.items() %}
+                    <div class="py-3 grid grid-cols-3">
+                        <div class="col-span-1 font-medium text-sm">{{ key }}</div>
+                        <div class="col-span-2 text-sm">{{ value }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div>
+                <h4 class="text-sm font-medium mb-3">번역</h4>
+                <div class="divide-y divide-gray-100">
+                    {% for key, value in translated_info.specifications.translated.items() %}
+                    <div class="py-3 grid grid-cols-3">
+                        <div class="col-span-1 font-medium text-sm">{{ key }}</div>
+                        <div class="col-span-2 text-sm">{{ value }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 썸네일 이미지 클릭시 메인 이미지 변경
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        const mainImage = document.querySelector('.product-image');
+        
+        if (thumbnails.length > 0 && mainImage) {
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', function() {
+                    mainImage.src = this.src;
+                    mainImage.alt = this.alt;
+                    
+                    // 활성화된 썸네일 표시
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        }
+        
+        // 세션 ID 값 (서버에서 전달)
+        const sessionId = "{{ session_id }}";
+        
+        // JSON 내보내기 버튼
+        const exportBtn = document.getElementById('export-json');
+        if (exportBtn) {
+            exportBtn.addEventListener('click', function() {
+                // API에서 데이터 가져오기
+                fetch(`/product/data/${sessionId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('데이터를 불러오는데 실패했습니다.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // JSON 문자열로 변환
+                    const jsonStr = JSON.stringify(data, null, 2);
+                    
+                    // Blob 생성 및 다운로드
+                    const blob = new Blob([jsonStr], {type: 'application/json'});
+                    const url = window.URL.createObjectURL(blob);
+                    
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'product_data.json';
+                    document.body.appendChild(a);
+                    a.click();
+                    
+                    setTimeout(function() {
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(url);
+                    }, 100);
+                })
+                .catch(error => {
+                    console.error('JSON 내보내기 오류:', error);
+                    alert('JSON 내보내기 중 오류가 발생했습니다.');
+                });
+            });
+        }
+    });
+</script>
+{% endblock %} 

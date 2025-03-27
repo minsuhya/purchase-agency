@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}해외 상품 수집 프로토타입 - 홈{% endblock %}
+
+{% block content %}
+<div class="bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl shadow-sm p-8 mb-10 hero-section animate-fade-in">
+    <div class="max-w-3xl mx-auto text-center">
+        <h1 class="text-4xl font-bold mb-4 text-primary">해외 상품 정보 수집 솔루션</h1>
+        <p class="text-xl text-gray-700 mb-8">해외 쇼핑몰의 상품 URL만 입력하면 상품 정보를 자동으로 수집하고 번역해드립니다.</p>
+        <a href="/product/" class="btn-primary-gradient py-3 px-6 rounded-lg transform hover:scale-105 flex items-center justify-center space-x-2 inline-flex">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <span>지금 시작하기</span>
+        </a>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 feature-grid">
+    <div class="feature-card scroll-reveal delay-100">
+        <div class="rounded-full bg-primary/10 p-3 w-12 h-12 flex items-center justify-center mb-4 feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">간편한 정보 수집</h3>
+        <p class="text-gray-600">URL 입력만으로 상품 이름, 가격, 이미지, 설명 등 모든 정보를 자동으로 수집합니다.</p>
+    </div>
+    
+    <div class="feature-card scroll-reveal delay-200">
+        <div class="rounded-full bg-primary/10 p-3 w-12 h-12 flex items-center justify-center mb-4 feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+            </svg>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">AI 자동 번역</h3>
+        <p class="text-gray-600">상품 정보를 한국어로 자동 번역하여 보다 편리한 이해를 돕습니다.</p>
+    </div>
+    
+    <div class="feature-card scroll-reveal delay-300">
+        <div class="rounded-full bg-primary/10 p-3 w-12 h-12 flex items-center justify-center mb-4 feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+            </svg>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">데이터 내보내기</h3>
+        <p class="text-gray-600">수집된 정보를 JSON 형식으로 내보내 다른 시스템과 쉽게 연동할 수 있습니다.</p>
+    </div>
+</div>
+
+<div class="bg-white rounded-lg shadow-md overflow-hidden mb-12 scroll-reveal">
+    <div class="p-6 border-b border-gray-100">
+        <h2 class="text-2xl font-semibold flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+            지원하는 쇼핑몰
+        </h2>
+    </div>
+    <div class="p-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                <div class="bg-primary/10 p-2 rounded-md mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <span class="font-medium">Amazon</span>
+            </div>
+            <div class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                <div class="bg-primary/10 p-2 rounded-md mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <span class="font-medium">eBay</span>
+            </div>
+            <div class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                <div class="bg-primary/10 p-2 rounded-md mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <span class="font-medium">기타 쇼핑몰</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-gradient-to-r from-primary to-primary-dark rounded-lg shadow-md overflow-hidden mb-10 scroll-reveal">
+    <div class="p-8 text-center text-white">
+        <h2 class="text-2xl font-bold mb-4">지금 바로 시작해보세요</h2>
+        <p class="text-lg mb-6 opacity-90">해외 상품 정보를 쉽고 빠르게 수집하여 비즈니스에 활용하세요.</p>
+        <a href="/product/" class="inline-flex items-center space-x-2 bg-white text-primary hover:bg-gray-100 font-medium py-3 px-6 rounded-lg transition duration-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <span>상품 URL 입력하기</span>
+        </a>
+    </div>
+</div>
+
+<footer class="mt-12 py-6 text-center text-gray-500 text-sm">
+    <p>&copy; 2023 해외상품 수집 프로토타입</p>
+    <div class="mt-2">
+        <a href="/product/debug" class="text-primary hover:text-primary-dark">디버깅 도구</a>
+    </div>
+</footer>
+
+{% endblock %} 

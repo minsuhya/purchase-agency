@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}해외 상품 수집 프로토타입{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#4da6ff',
+                            DEFAULT: '#0066cc',
+                            dark: '#004c99',
+                        },
+                        success: {
+                            light: '#86efac',
+                            DEFAULT: '#22c55e',
+                            dark: '#16a34a',
+                        },
+                        danger: {
+                            light: '#fca5a5',
+                            DEFAULT: '#ef4444',
+                            dark: '#dc2626',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: 0, transform: 'translateY(10px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer components {
+            .original-text {
+                @apply p-3 rounded-md mb-3 bg-gray-100 border-l-4 border-gray-500;
+            }
+            .translated-text {
+                @apply p-3 rounded-md mb-3 bg-green-50 border-l-4 border-green-500;
+            }
+            .thumbnail {
+                @apply w-20 h-20 object-cover m-1 cursor-pointer border border-gray-300 hover:border-primary;
+            }
+            .thumbnail.active {
+                @apply border-2 border-primary;
+            }
+            .section-title {
+                @apply mt-6 mb-3 pb-2 border-b border-gray-200;
+            }
+            .feature-card {
+                @apply bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300 hover:-translate-y-1;
+            }
+            .btn-primary {
+                @apply inline-flex items-center justify-center bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded transition-all duration-200;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/custom.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <header>
+        <nav class="bg-primary text-white shadow-md">
+            <div class="container mx-auto max-w-6xl px-4 py-3">
+                <div class="flex justify-between items-center">
+                    <a href="/" class="text-xl font-bold flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                        </svg>
+                        해외 상품 수집 프로토타입
+                    </a>
+                    <div>
+                        <ul class="flex space-x-6">
+                            <li>
+                                <a href="/" class="hover:text-white/80 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                    </svg>
+                                    홈
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/product/" class="hover:text-white/80 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                    상품 수집
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-grow">
+        <div class="container mx-auto max-w-6xl px-4 py-6">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-auto">
+        <div class="container mx-auto max-w-6xl px-4 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-lg font-semibold mb-2">해외 상품 수집 프로토타입</p>
+                    <p class="text-gray-400 text-sm">&copy; 2023 해외 상품 수집 프로토타입. 모든 권리 보유.</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="/" class="text-gray-400 hover:text-white transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                    </a>
+                    <a href="/product/" class="text-gray-400 hover:text-white transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+    <script>
+        // 스크롤 애니메이션
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollElements = document.querySelectorAll('.scroll-reveal');
+            
+            const elementInView = (el, scrollOffset = 0) => {
+                const elementTop = el.getBoundingClientRect().top;
+                return (elementTop <= (window.innerHeight || document.documentElement.clientHeight) * 0.8);
+            }
+            
+            const displayScrollElement = (element) => {
+                element.classList.add('visible');
+            }
+            
+            const checkScrollElements = () => {
+                scrollElements.forEach((el) => {
+                    if (elementInView(el)) {
+                        displayScrollElement(el);
+                    }
+                });
+            }
+            
+            // 초기 체크
+            checkScrollElements();
+            
+            // 스크롤 이벤트에서 체크
+            window.addEventListener('scroll', () => {
+                checkScrollElements();
+            });
+        });
+    </script>
+</body>
+</html> 
