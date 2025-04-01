@@ -7,8 +7,8 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 from loguru import logger
 
-from app.models.product import ProductInfo, ProductImage, ProductOption
-from app.utils.base_scraper import BaseScraper
+from app.models.product import Product, ProductImage, ProductOption
+from app.scraper.base_scraper import BaseScraper
 
 
 class AmazonScraper(BaseScraper):
@@ -20,7 +20,7 @@ class AmazonScraper(BaseScraper):
         # Amazon 특화 헤더 추가
         self.headers["Referer"] = "https://www.amazon.com/"
     
-    async def scrape(self, url: str) -> ProductInfo:
+    async def scrape(self, url: str) -> Product:
         """
         Amazon 상품 페이지에서 정보를 추출합니다.
         
@@ -28,17 +28,17 @@ class AmazonScraper(BaseScraper):
             url (str): Amazon 상품 URL
             
         Returns:
-            ProductInfo: 추출된 상품 정보
+            Product: 추출된 상품 정보
         """
         try:
-            logger.info(f"Amazon 상품 정보 스크래핑 시작: {url}")
-            response = await self.client.get(url, headers=self.headers)
+            self.logger.info(f"Amazon 상품 정보 스크래핑 시작: {url}")
+            status_code, html = await self._fetch_page(url)
             
-            if response.status_code != 200:
-                logger.error(f"Amazon 응답 오류: HTTP {response.status_code}")
-                raise Exception(f"Amazon 페이지 접근 실패: HTTP {response.status_code}")
+            if status_code != 200:
+                self.logger.error(f"Amazon 응답 오류: HTTP {status_code}")
+                raise Exception(f"Amazon 페이지 접근 실패: HTTP {status_code}")
                 
-            soup = BeautifulSoup(response.text, "lxml")
+            soup = BeautifulSoup(html, "lxml")
             
             # ASIN 추출
             asin = self._extract_asin(url, soup)
@@ -54,13 +54,15 @@ class AmazonScraper(BaseScraper):
             
             # 이미지 URL 추출
             images = self._extract_amazon_images(soup)
-            main_image = None
-            image_gallery = []
+            image_list = []
             
-            if images and len(images) > 0:
-                main_image = ProductImage(url=images[0], alt=title_text)
-                for i in range(1, len(images)):
-                    image_gallery.append(ProductImage(url=images[i], alt=f"{title_text} - {i}"))
+            if images:
+                for i, img_url in enumerate(images):
+                    image_list.append({
+                        "url": img_url,
+                        "alt": f"{title_text} - {i}" if i > 0 else title_text,
+                        "is_main": i == 0
+                    })
             
             # 상품 설명 추출
             description = self._extract_amazon_description(soup)
@@ -77,9 +79,9 @@ class AmazonScraper(BaseScraper):
                 if options_result and isinstance(options_result, tuple) and len(options_result) == 3:
                     options, colors, sizes = options_result
                 else:
-                    logger.warning("옵션 추출 결과가 예상 형식과 다릅니다.")
+                    self.logger.warning("옵션 추출 결과가 예상 형식과 다릅니다.")
             except Exception as e:
-                logger.error(f"옵션 추출 중 오류 발생: {str(e)}")
+                self.logger.error(f"옵션 추출 중 오류 발생: {str(e)}")
             
             # 카테고리 추출
             categories = self._extract_categories(soup)
@@ -89,11 +91,10 @@ class AmazonScraper(BaseScraper):
             
             # 평점 및 리뷰 수 추출 - 안전한 방식으로 처리
             try:
-                # 평점 추출 메서드 호출 - 항상 (str, str) 튜플을 반환
                 rating, review_count = self._extract_amazon_rating(soup)
-                logger.debug(f"상품 평점 추출 성공: {rating}, 리뷰 수: {review_count}")
+                self.logger.debug(f"상품 평점 추출 성공: {rating}, 리뷰 수: {review_count}")
             except Exception as e:
-                logger.error(f"평점 추출 중 예외 발생: {str(e)}", exc_info=True)
+                self.logger.error(f"평점 추출 중 예외 발생: {str(e)}", exc_info=True)
                 rating, review_count = "0", "0"  # 기본값 설정
             
             # 판매자 정보 추출
@@ -102,24 +103,23 @@ class AmazonScraper(BaseScraper):
             # 배송 정보 추출
             delivery = self._extract_delivery(soup)
             
-            # ProductInfo 객체 생성
-            product_info = ProductInfo(
-                title={"original": title_text, "translated": ""},
+            # Product 모델 생성
+            product = Product(
+                title_original=title_text,
+                title_translated="",  # 번역은 별도 처리
                 brand=brand,
                 url=url,
-                price={
-                    "original": price_text,
-                    "value": price_value,
-                    "krw": None  # 환율 계산은 별도로 처리
-                },
+                price_original=price_text,
+                price_value=price_value,
+                price_krw=0.0,  # 환율 계산은 별도로 처리
                 currency=self._extract_currency(price_text),
-                main_image=main_image,
-                images=image_gallery,
-                description={"original": description, "translated": ""},
-                specifications={"original": specs, "translated": {}},
-                options=options,
+                description_original=description,
+                description_translated="",  # 번역은 별도 처리
+                specifications_original=json.dumps(specs, ensure_ascii=False),
+                specifications_translated="",  # 번역은 별도 처리
+                options=[option.dict() for option in options],
                 categories=categories,
-                created_at=datetime.now().isoformat()
+                images=image_list
             )
             
             # 추가 정보 (raw_data)에 포함
@@ -137,13 +137,13 @@ class AmazonScraper(BaseScraper):
             if sizes:
                 raw_data["sizes"] = sizes
                 
-            product_info.raw_data = raw_data
+            product.raw_data = raw_data
             
-            logger.info(f"Amazon 상품 정보 스크래핑 완료: {url}")
-            return product_info
+            self.logger.info(f"Amazon 상품 정보 스크래핑 완료: {url}")
+            return product
         
         except Exception as e:
-            logger.error(f"Amazon 스크래핑 중 오류 발생: {str(e)}", exc_info=True)
+            self.logger.error(f"Amazon 스크래핑 중 오류 발생: {str(e)}", exc_info=True)
             raise Exception(f"Amazon 상품 정보 수집 실패: {str(e)}")
     
     def _extract_asin(self, url: str, soup: BeautifulSoup) -> Optional[str]:
@@ -181,7 +181,7 @@ class AmazonScraper(BaseScraper):
         for selector in ["#productTitle", "span.product-title-word-break", "h1.a-size-large"]:
             title_element = soup.select_one(selector)
             if title_element:
-                return title_element.text.strip()
+                return self._clean_text(title_element.text)
         
         # 타이틀이 없는 경우 기본값
         return "Unknown Product"
@@ -228,7 +228,7 @@ class AmazonScraper(BaseScraper):
                 price_text = f"{price_whole.text}{price_fraction.text}"
         
         # 숫자만 추출
-        price_value = self._extract_price(price_text)
+        price_text, price_value = self._extract_price(price_text)
         
         return price_text, price_value
     
@@ -287,7 +287,7 @@ class AmazonScraper(BaseScraper):
         ]:
             desc_elem = soup.select_one(selector)
             if desc_elem:
-                description = desc_elem.text.strip()
+                description = self._clean_text(desc_elem.text)
                 break
         
         # 상품 설명이 없는 경우 특징(features) 사용
@@ -305,7 +305,7 @@ class AmazonScraper(BaseScraper):
             "#feature-bullets li span.a-list-item, #feature-bullets ul li"
         )
         for item in feature_items:
-            feature_text = item.text.strip()
+            feature_text = self._clean_text(item.text)
             if feature_text:
                 features.append(feature_text)
         return features
@@ -328,9 +328,10 @@ class AmazonScraper(BaseScraper):
                 value_element = row.select_one("td")
 
                 if key_element and value_element:
-                    key = key_element.text.strip().rstrip(":")
-                    value = value_element.text.strip()
-                    specs[key] = value
+                    key = self._clean_text(key_element.text)
+                    value = self._clean_text(value_element.text)
+                    if key and value:
+                        specs[key] = value
         
         # 방법 2: 상세 정보 글머리 기호
         if not specs:
@@ -338,12 +339,13 @@ class AmazonScraper(BaseScraper):
                 "#detailBullets_feature_div li, #detailBulletsWrapper_feature_div li"
             )
             for bullet in detail_bullets:
-                text = bullet.text.strip()
+                text = self._clean_text(bullet.text)
                 parts = text.split(":", 1)
                 if len(parts) == 2:
                     key = parts[0].strip()
                     value = parts[1].strip()
-                    specs[key] = value
+                    if key and value:
+                        specs[key] = value
         
         return specs
     
@@ -368,7 +370,8 @@ class AmazonScraper(BaseScraper):
             if color_values:
                 options.append(ProductOption(
                     title="Color", 
-                    option_values=color_values  # 별칭 사용
+                    option_values=color_values,
+                    is_required=True
                 ))
             
             # 사이즈 옵션
@@ -385,7 +388,8 @@ class AmazonScraper(BaseScraper):
             if size_values:
                 options.append(ProductOption(
                     title="Size", 
-                    option_values=size_values  # 별칭 사용
+                    option_values=size_values,
+                    is_required=True
                 ))
             
             # 다른 타입의 옵션
@@ -413,22 +417,23 @@ class AmazonScraper(BaseScraper):
                         if option_values:
                             options.append(ProductOption(
                                 title=option_title, 
-                                option_values=option_values  # 별칭 사용
+                                option_values=option_values,
+                                is_required=True
                             ))
                         
         except Exception as e:
-            logger.error(f"Amazon 옵션 추출 중 오류: {str(e)}", exc_info=True)
+            self.logger.error(f"Amazon 옵션 추출 중 오류: {str(e)}", exc_info=True)
             # 오류 발생 시 빈 결과 반환
         
         # 타입 검증
         if not isinstance(options, list):
-            logger.error("options가 리스트가 아닙니다. 빈 리스트로 초기화합니다.")
+            self.logger.error("options가 리스트가 아닙니다. 빈 리스트로 초기화합니다.")
             options = []
         if not isinstance(colors, list):
-            logger.error("colors가 리스트가 아닙니다. 빈 리스트로 초기화합니다.")
+            self.logger.error("colors가 리스트가 아닙니다. 빈 리스트로 초기화합니다.")
             colors = []
         if not isinstance(sizes, list):
-            logger.error("sizes가 리스트가 아닙니다. 빈 리스트로 초기화합니다.")
+            self.logger.error("sizes가 리스트가 아닙니다. 빈 리스트로 초기화합니다.")
             sizes = []
             
         return options, colors, sizes
@@ -474,7 +479,7 @@ class AmazonScraper(BaseScraper):
                 if count_match:
                     review_count_str = count_match.group(1).replace(",", "")
         except Exception as e:
-            logger.warning(f"평점 및 리뷰 추출 중 오류: {str(e)}", exc_info=True)
+            self.logger.warning(f"평점 및 리뷰 추출 중 오류: {str(e)}", exc_info=True)
         
         # 결과 확인 및 안전 반환 (문자열 형식으로 반환)
         if not rating_str or not isinstance(rating_str, str):
@@ -491,7 +496,7 @@ class AmazonScraper(BaseScraper):
         for crumb in breadcrumb:
             a_tag = crumb.select_one("a")
             if a_tag and a_tag.text.strip():
-                categories.append(a_tag.text.strip())
+                categories.append(self._clean_text(a_tag.text))
         return categories
     
     def _extract_availability(self, soup: BeautifulSoup) -> Optional[str]:
@@ -499,7 +504,7 @@ class AmazonScraper(BaseScraper):
         availability = None
         avail_elem = soup.select_one("#availability span, #availability, #outOfStock")
         if avail_elem:
-            availability = avail_elem.text.strip()
+            availability = self._clean_text(avail_elem.text)
         return availability
     
     def _extract_seller(self, soup: BeautifulSoup) -> Optional[str]:
@@ -507,7 +512,7 @@ class AmazonScraper(BaseScraper):
         seller = None
         seller_elem = soup.select_one("#merchant-info, #bylineInfo, #sellerProfileTriggerId")
         if seller_elem:
-            seller = seller_elem.text.strip()
+            seller = self._clean_text(seller_elem.text)
         return seller
     
     def _extract_delivery(self, soup: BeautifulSoup) -> Optional[str]:
@@ -515,5 +520,5 @@ class AmazonScraper(BaseScraper):
         delivery = None
         delivery_elem = soup.select_one("#delivery-message, #mir-layout-DELIVERY_BLOCK")
         if delivery_elem:
-            delivery = delivery_elem.text.strip()
+            delivery = self._clean_text(delivery_elem.text)
         return delivery 

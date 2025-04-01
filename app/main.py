@@ -6,6 +6,7 @@ import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from loguru import logger
 
 # 환경 변수 로드
 load_dotenv()
@@ -28,11 +29,24 @@ from app.utils.templates import get_templates, setup_templates
 templates = get_templates()
 setup_templates(templates)
 
+# 데이터베이스 초기화
+from app.models.database import init_db
+@app.on_event("startup")
+async def startup_event():
+    """애플리케이션 시작 시 실행되는 이벤트 핸들러"""
+    try:
+        logger.info("애플리케이션 시작...")
+        init_db()
+        logger.info("데이터베이스 초기화 완료")
+    except Exception as e:
+        logger.error(f"애플리케이션 시작 중 오류 발생: {str(e)}")
+        raise
+
 # 라우터 모듈 import
 from app.routers import product_router, home_router
 
 # 라우터 포함
-app.include_router(home_router.router)  # 홈 라우터를 먼저 등록
+app.include_router(home_router.router)
 app.include_router(product_router.router)
 
 if __name__ == "__main__":

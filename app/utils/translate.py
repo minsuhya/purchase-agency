@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from openai import AsyncOpenAI
 from loguru import logger
 
-from app.models.product import ProductInfo
+from app.models.product import Product
 
 load_dotenv()  # .env 파일에서 환경 변수 로드
 
@@ -14,44 +14,99 @@ load_dotenv()  # .env 파일에서 환경 변수 로드
 client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
-async def translate_product_info(product_info: ProductInfo) -> ProductInfo:
+async def translate_product_info(product: Product) -> Product:
     """상품 정보를 번역하고 처리합니다."""
-    # 번역할 데이터 준비
     try:
         # 상품명 번역
-        if product_info.title.get("original"):
-            product_info.title["translated"] = await translate_text(
-                product_info.title["original"], "상품명"
+        if product.title_original:
+            product.title_translated = await translate_text(
+                product.title_original, "상품명"
             )
-        
+
         # 상품 설명 번역
-        if product_info.description.get("original"):
-            product_info.description["translated"] = await translate_text(
-                product_info.description["original"], "상품 설명"
+        if product.description_original:
+            product.description_translated = await translate_text(
+                product.description_original, "상품 설명"
             )
-        
+
         # 상품 스펙 번역
-        if product_info.specifications and product_info.specifications.get("original"):
-            translated_specs = {}
-            for key, value in product_info.specifications["original"].items():
-                translated_key = await translate_text(key, "스펙 키")
-                translated_value = await translate_text(value, "스펙 값")
-                translated_specs[translated_key] = translated_value
+        if product.specifications_original:
+            specs = product.specifications_original
+            # 문자열인 경우 JSON으로 파싱
+            if isinstance(specs, str):
+                try:
+                    specs = json.loads(specs)
+                except json.JSONDecodeError:
+                    logger.warning(f"스펙 JSON 파싱 실패: {specs}")
+                    specs = {}
             
-            product_info.specifications["translated"] = translated_specs
-        
+            # 전체 스펙을 JSON 문자열로 변환
+            specs_str = json.dumps(specs, ensure_ascii=False)
+            
+            # 문자열 전체를 한 번에 번역
+            translated_specs_str = await translate_text(specs_str, "상품 스펙")
+            
+            # 번역된 문자열을 다시 딕셔너리로 변환
+            try:
+                translated_specs = json.loads(translated_specs_str)
+                # 유니코드 이스케이프 시퀀스를 실제 문자로 변환
+                product.specifications_translated = json.loads(
+                    json.dumps(translated_specs, ensure_ascii=False)
+                )
+            except json.JSONDecodeError:
+                logger.error("스펙 JSON 파싱 실패")
+                product.specifications_translated = specs
+
+        # 상품 옵션 번역
+        if product.options_original:
+            # 옵션 리스트를 JSON 문자열로 변환
+            options_str = json.dumps(product.options_original, ensure_ascii=False)
+            
+            # 문자열 번역
+            translated_options_str = await translate_text(options_str, "상품 옵션")
+            
+            # 번역된 문자열을 다시 원래 타입(리스트)으로 변환
+            try:
+                translated_options = json.loads(translated_options_str)
+                # 유니코드 이스케이프 시퀀스를 실제 문자로 변환
+                product.options_translated = json.loads(
+                    json.dumps(translated_options, ensure_ascii=False)
+                )
+            except json.JSONDecodeError:
+                logger.error("옵션 JSON 파싱 실패")
+                product.options_translated = product.options_original
+
+        # 카테고리 번역
+        if product.categories_original:
+            # 카테고리 리스트를 JSON 문자열로 변환
+            categories_str = json.dumps(product.categories_original, ensure_ascii=False)
+            
+            # 문자열 번역
+            translated_categories_str = await translate_text(categories_str, "카테고리")
+            
+            # 번역된 문자열을 다시 원래 타입(리스트)으로 변환
+            try:
+                translated_categories = json.loads(translated_categories_str)
+                # 유니코드 이스케이프 시퀀스를 실제 문자로 변환
+                product.categories_translated = json.loads(
+                    json.dumps(translated_categories, ensure_ascii=False)
+                )   
+            except json.JSONDecodeError:
+                logger.error("카테고리 JSON 파싱 실패")
+                product.categories_translated = product.categories_original
+
         # 원화 가격 계산
-        if product_info.price and product_info.price.get("value"):
-            product_info.price["krw"] = await convert_to_krw(
-                product_info.price["value"], product_info.currency
+        if product.price_value:
+            product.price_krw = await convert_to_krw(
+                product.price_value, product.currency
             )
-        
-        return product_info
+
+        return product
     
     except Exception as e:
         logger.error(f"상품 정보 번역 오류: {str(e)}")
         # 오류가 발생해도 원본 데이터 반환
-        return product_info
+        return product
 
 
 async def translate_text(text: str, context: str = "") -> str:
@@ -64,7 +119,7 @@ async def translate_text(text: str, context: str = "") -> str:
         response = await client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "당신은 전문 번역가입니다. 한국어로 자연스럽게 번역해주세요."},
+                {"role": "system", "content": "당신은 전문 번역가입니다. 한국어 그대로 번역해주세요."},
                 {"role": "user", "content": f"다음 {context}을 한국어로 번역해주세요: {text}"}
             ],
             temperature=0.3,

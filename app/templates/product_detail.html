@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}상품 정보 - {{ product.title_original }}{% endblock %}
+{% block title %}상품 상세 - {{ product.title_original }}{% endblock %}
 
 {% block content %}
 <div class="mb-6">
@@ -8,9 +8,9 @@
         <ol class="flex space-x-2">
             <li><a href="/" class="text-primary hover:text-primary-dark">홈</a></li>
             <li class="text-gray-500">/</li>
-            <li><a href="/product/" class="text-primary hover:text-primary-dark">상품 수집</a></li>
+            <li><a href="/product/list" class="text-primary hover:text-primary-dark">상품 목록</a></li>
             <li class="text-gray-500">/</li>
-            <li class="text-gray-700">상품 정보</li>
+            <li class="text-gray-700">상품 상세</li>
         </ol>
     </nav>
 </div>
@@ -48,8 +48,8 @@
             <div class="flex justify-between items-center p-4 border-b border-gray-100">
                 <div class="flex items-center">
                     <h2 class="text-lg font-semibold">상품 기본 정보</h2>
-                    {% if from_cache %}
-                    <span class="ml-2 bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">캐시됨</span>
+                    {% if product.from_cache %}
+                    <span class="ml-2 bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">캐시됨</span>
                     {% endif %}
                 </div>
                 <div class="space-x-2">
@@ -59,15 +59,12 @@
                     <button id="export-json" class="inline-block bg-success text-white px-3 py-1 rounded text-sm hover:bg-success-dark transition duration-200">
                         JSON 내보내기
                     </button>
-                    <a href="/product/scrape" 
-                       onclick="event.preventDefault(); document.getElementById('refresh-form').submit();" 
-                       class="inline-block bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition duration-200">
-                        새로고침
+                    <a href="/product/{{ product.id }}/ai-detail" class="inline-block bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600 transition duration-200">
+                        AI 상세 생성
                     </a>
-                    <form id="refresh-form" action="/product/scrape" method="post" class="hidden">
-                        <input type="hidden" name="product_url" value="{{ product.url }}">
-                        <input type="hidden" name="force_refresh" value="true">
-                    </form>
+                    <a href="/product/{{ product.id }}/edit" class="inline-block bg-primary text-white px-3 py-1 rounded text-sm hover:bg-primary-dark transition duration-200">
+                        수정
+                    </a>
                 </div>
             </div>
             <div class="p-5">
@@ -99,6 +96,14 @@
                     </div>
                 </div>
                 {% endif %}
+
+                <div class="mb-5">
+                    <h3 class="text-base font-medium mb-2">등록 정보</h3>
+                    <div class="text-sm text-gray-600">
+                        <p>등록일: {{ product.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+                        <p>수정일: {{ product.updated_at.strftime('%Y-%m-%d %H:%M') }}</p>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -171,6 +176,24 @@
                     {% endfor %}
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if product.ai_detail_html %}
+<div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+    <div class="p-4 border-b border-gray-100">
+        <div class="flex justify-between items-center">
+            <h3 class="text-base font-medium">AI 생성 상품 상세</h3>
+            <a href="/product/{{ product.id }}/ai-detail" class="inline-block bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600 transition duration-200">
+                다시 생성
+            </a>
+        </div>
+    </div>
+    <div class="p-5">
+        <div class="prose max-w-none">
+            {{ product.ai_detail_html | safe }}
         </div>
     </div>
 </div>

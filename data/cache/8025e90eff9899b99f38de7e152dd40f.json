@@ -1,0 +1,342 @@
+{
+  "data": {
+    "id": 49363251,
+    "vid": "67b3392074b9ba0007387f84",
+    "tid": null,
+    "sid": null,
+    "vcid": 20000019,
+    "tcid": "162116",
+    "title": "업데이트 chic 한 부서 봄과 여름 달콤한 작은 레이스 섹시한 활 레이스 전후 스택 착용 캐미솔 의류 여자",
+    "attrs": "颜色:蓝色 白色 杏色,尺码:均码,材质成分:聚酯纤维/涤纶100%,制造方法:梭织,货号:1570,风格:通勤,通勤:韩版,服装版型:直筒型,穿着方式:开衫,组合形式:单件,衣长:短款,袖长:无袖,领型:一字领,图案:纯色,适用年龄:18-24周岁,品牌:Gee,上市年份季节:2025年夏季,面料:其他/other",
+    "style": "通勤,韩版",
+    "season": null,
+    "color": "蓝色,白色,杏色",
+    "size": "均码",
+    "imgs": "//img1.vvic.com/upload/1739906348178_21468.jpg,//img1.vvic.com/upload/1739906353106_538358.jpg,//img1.vvic.com/upload/1739798156452_646261.jpg,//img1.vvic.com/upload/1739798151954_354430.jpg",
+    "status": 1,
+    "recommend": 0,
+    "showcase": 0,
+    "spam": 0,
+    "discountType": null,
+    "sales": 1,
+    "isOld": null,
+    "pname": "女装",
+    "isSpMessageType": 1,
+    "itemType": 0,
+    "promotionType": null,
+    "discountPrice": "",
+    "originPrice": "",
+    "price": "",
+    "isSelfItem": null,
+    "deliveryTime": "36시간이내발송",
+    "deliveryTimeTips": "상품은주문후36시간이내발송이내에준비됩니다.만약상품에예약주문SKU가포함되어있으면,예약주문이끝난후36시간이내발송이내에준비됩니다.주문에여러상품이포함된경우전체배송시간이연장될수있습니다.",
+    "callSameStyleReason": null,
+    "earlyWarning4Order": null,
+    "goodsInStock": 1,
+    "goodsInStockDate": "04月02日",
+    "shippingMethodText": "<span>지금 주문하면, <span class=\"detail-info-in-stock-data\">04월02일</span> 전까지 발송될 예정입니다</span><span>. </span><span>배송대행서비스는VVIC에서제공합니다.</sapn>",
+    "ladderPriceRule": null,
+    "ladderPriceRuleMap": "null",
+    "isFavoriteItem": 0,
+    "breadCrumbs": [
+      {
+        "name": "首页",
+        "url": "https://www.vvic.com/"
+      },
+      {
+        "name": "女装",
+        "url": "https://www.vvic.com/gz/list/set-1_0_0-0-0-0-0/"
+      },
+      {
+        "name": "上装/外套",
+        "url": "https://www.vvic.com/gz/list/set-1_100_0-0-0-0-0/"
+      },
+      {
+        "name": "蕾丝衫/雪纺衫",
+        "url": "https://www.vvic.com/gz/list/set-1_100_20000019-0-0-0-0/"
+      }
+    ],
+    "isTheft": 0,
+    "isSupportPangge": 1,
+    "panggePunishment": null,
+    "iv": "vvicItem",
+    "rankingList": null,
+    "itemUploadConf": {
+      "unableChannels": null,
+      "limitPrompt": null
+    },
+    "platformService": {
+      "list": [
+        {
+          "serviceTitle": "반품규칙",
+          "serviceName": "발송후<span class=\"red-text\">30</span>일이내반품가능 · <span class=\"red-text\">30%</span>반품가능",
+          "serviceDesc": "1. 반품신청기간:발송후30일이내에반품신청이가능하며,상품이단종된경우반품기간내에단종된후7일이내에반품을신청해야합니다.<br>2. 반품율제한:재판매에영향을미치지않는경우,상점은30%의반품율을수용합니다.품질문제는제외되며,반품율제한을받지않지만상점과협의가필요합니다.<br>3. 발송전:택배발송전에주문을100%취소할수있습니다.<br>4. 상점보충: 무보충。<br>5. 상점보충기준이앞의3항목보다낮을경우,앞의3항목을기준으로합니다.<br>6. 반품규정을충족하지못하는경우,상점과사전에소통하여협의하고,반품실패를방지해주시기바랍니다.<div class='explain-rule'><a target='_blank' href='https://www1.vvic.com/thsy.html'>자세한설명은도움말센터로이동하세요></a></div>"
+        },
+        {
+          "serviceTitle": "품질검사보험",
+          "serviceName": "품질검사보험",
+          "serviceDesc": "VVIC대행상품을주문할때【고급품질검사】서비스를선택하면,VVIC가【품질검사보험】을제공하여【고급품질검사】서비스를보증합니다.만약【고급품질검사】항목과관련된문제가발생할경우,VVIC는해당상품의모든서비스비용을상점에보상할것을약속합니다."
+        },
+        {
+          "serviceTitle": "반품보장",
+          "serviceName": "반품보장",
+          "serviceDesc": "VVIC대행상품을이용하면VVIC의【반품보장】서비스를받을수있습니다.발송후9일이내에반품을신청할수있으며,반품실패시VVIC가제공하는【반품실패보상금액】으로상계하여상품의실제주문금액을상점에환불해드립니다.다른반품실패주문에대해서는플랫폼에서반품수수료를면제합니다.반품실패상품에대해서는VVIC가반품수수료를면제하고,운임쿠폰형태로보상하여시스템에서자동으로발급됩니다."
+        },
+        {
+          "serviceTitle": "반품가격보장",
+          "serviceName": "반품가격보장",
+          "serviceDesc": "VVIC대행상품을이용하면VVIC의【반품가격보장】서비스를받을수있습니다.상점주가【수령후3일이내】에반품을신청하면,상품가격이인하되거나인상되었더라도VVIC는반품가격을주문당시의가격과일치하도록보장합니다."
+        }
+      ],
+      "indexImg": "http://img.vvic.com/img/1648468883539_105330.png"
+    },
+    "systemRecognizeLogoFlag": null,
+    "itemStaffOfficer": {
+      "moduleName": null,
+      "dim": [
+        {
+          "title": "30天",
+          "checked": 1,
+          "groupedStatistics": [
+            [
+              {
+                "key": "timelyShipRate48h",
+                "name": "48小时发货率",
+                "value": "100%"
+              },
+              {
+                "key": "avgShipTime",
+                "name": "平均发货时长",
+                "value": "7小时"
+              },
+              {
+                "key": "salesNum",
+                "name": "销量",
+                "value": "1"
+              },
+              {
+                "key": "payNum",
+                "name": "支付件数",
+                "value": "1"
+              },
+              {
+                "key": "distriNum",
+                "name": "上款量",
+                "value": "11"
+              },
+              {
+                "key": "favNum",
+                "name": "收藏量",
+                "value": "5"
+              }
+            ],
+            []
+          ]
+        },
+        {
+          "title": "90天",
+          "checked": 0,
+          "groupedStatistics": [
+            [
+              {
+                "key": "timelyShipRate48h",
+                "name": "48小时发货率",
+                "value": "100%"
+              },
+              {
+                "key": "avgShipTime",
+                "name": "平均发货时长",
+                "value": "7小时"
+              },
+              {
+                "key": "salesNum",
+                "name": "销量",
+                "value": "1"
+              },
+              {
+                "key": "payNum",
+                "name": "支付件数",
+                "value": "1"
+              },
+              {
+                "key": "distriNum",
+                "name": "上款量",
+                "value": "17"
+              },
+              {
+                "key": "favNum",
+                "name": "收藏量",
+                "value": "12"
+              }
+            ],
+            []
+          ]
+        },
+        {
+          "title": "累计",
+          "checked": 0,
+          "groupedStatistics": [
+            [
+              {
+                "key": "timelyShipRate48h",
+                "name": "48小时发货率",
+                "value": "100%"
+              },
+              {
+                "key": "avgShipTime",
+                "name": "平均发货时长",
+                "value": "7小时"
+              },
+              {
+                "key": "salesNum",
+                "name": "销量",
+                "value": "1"
+              },
+              {
+                "key": "payNum",
+                "name": "支付件数",
+                "value": "1"
+              },
+              {
+                "key": "distriNum",
+                "name": "上款量",
+                "value": "17"
+              },
+              {
+                "key": "favNum",
+                "name": "收藏量",
+                "value": "12"
+              }
+            ],
+            []
+          ]
+        }
+      ]
+    },
+    "itemRecentTrends": null,
+    "sloganList": [
+      {
+        "slogan": "现货",
+        "bgColor": "#FFFFFF",
+        "strokeColor": "#58BA1B",
+        "textColor": "#58BA1B",
+        "hover": null
+      },
+      {
+        "slogan": "36小时内发货",
+        "bgColor": "#FFFFFF",
+        "strokeColor": "#58BA1B",
+        "textColor": "#58BA1B",
+        "hover": null
+      },
+      {
+        "slogan": "可退货",
+        "bgColor": "#FFFFFF",
+        "strokeColor": "#998263",
+        "textColor": "#998263",
+        "hover": null
+      },
+      {
+        "slogan": "实拍",
+        "bgColor": "#FFFFFF",
+        "strokeColor": "#998263",
+        "textColor": "#998263",
+        "hover": null
+      }
+    ],
+    "shopRefundStatement": {
+      "statementEmpty": true,
+      "statement": "상점보충: 무보충"
+    },
+    "isFirstLaunch": null,
+    "bargainFlag": 1,
+    "noSupportDesc": null,
+    "isShopOwner": 0,
+    "isSaleOff": 0,
+    "saleOffAmount": "",
+    "recommend_id": null,
+    "upload_type": null,
+    "shop_id": 60671,
+    "city_market_id": 1,
+    "city_market_code": "gz",
+    "discount_value": null,
+    "active_price": null,
+    "sku_min_price": null,
+    "sku_max_price": null,
+    "price_type": 1,
+    "art_no": "1570",
+    "attrs_json": {
+      "图案": "纯色",
+      "货号": "1570",
+      "品牌": "Gee",
+      "颜色": "蓝色 白色 杏色",
+      "面料": "其他/other",
+      "尺码": "均码",
+      "穿着方式": "开衫",
+      "适用年龄": "18-24周岁",
+      "衣长": "短款",
+      "制造方法": "梭织",
+      "上市年份季节": "2025年夏季",
+      "组合形式": "单件",
+      "领型": "一字领",
+      "袖长": "无袖",
+      "材质成分": "聚酯纤维/涤纶100%",
+      "通勤": "韩版",
+      "风格": "通勤",
+      "服装版型": "直筒型"
+    },
+    "color_id": "1627207:28338,1627207:28320,1627207:30155",
+    "color_pics": [
+      "//img1.vvic.com/upload/1739798613397_330917.jpg",
+      "//img1.vvic.com/upload/1739798617472_52510.jpg",
+      "//img1.vvic.com/upload/1742473204968_955472.jpg"
+    ],
+    "size_id": "20509:137",
+    "index_img_url": "//img1.vvic.com/upload/1739906348178_21468.jpg",
+    "video_url": null,
+    "video_img_url": null,
+    "pangge_flag": 1,
+    "merge_flag": 0,
+    "status_tb": null,
+    "status_flag": null,
+    "video_flag": 0,
+    "is_active": null,
+    "is_special_offer": 0,
+    "is_pre_sell": 0,
+    "is_pre_sell_edit": null,
+    "is_tx": 1,
+    "is_sp": 1,
+    "is_sp_front": 5,
+    "is_sp_manual": null,
+    "is_lack": 0,
+    "is_ad": null,
+    "ad_score": null,
+    "desc_img_num": 25,
+    "up_time": "2025-02-18 07:00:00",
+    "expired_time": null,
+    "up_shelf_time": null,
+    "last_update_time": null,
+    "service_promise": 0,
+    "fake_flag": 0,
+    "model_id": null,
+    "sale_type": 0,
+    "cur_total_df_sale": 1,
+    "cur_upload_num": 17,
+    "cur_fav_item_num": 12,
+    "is_deleted": 0,
+    "support_cart": null,
+    "show_item_biz_rate": 1,
+    "discount_price": "",
+    "theft_item_id": null,
+    "protect_status": 0,
+    "item_desc": {
+      "desc": "<div style=\"line-height:auto; text-align: center; \">尺码信息</div><div class=\"size-detail-box\" style=\"width: 100%; overflow: hidden; overflow-x: auto;\"><table class=\"size-detail-table\" style=\"min-width: 750px;\"><thead><tr style=\"background-color: #F5F5F5;\"><th style=\"white-space: nowrap;padding: 10px; min-width: 60px;\">尺码</th><th style=\"white-space: nowrap;padding: 10px; min-width: 60px;\">肩宽（cm）</th><th style=\"white-space: nowrap;padding: 10px; min-width: 60px;\">胸围（cm）</th><th style=\"white-space: nowrap;padding: 10px; min-width: 60px;\">衣长（cm）</th><th style=\"white-space: nowrap;padding: 10px; min-width: 60px;\">袖长（cm）</th></tr></thead><tbody><tr><td style=\"padding: 10px; min-width: 60px;border-bottom: 1px solid #EBEBEB;\">均码</td><td style=\"padding: 10px; min-width: 60px;border-bottom: 1px solid #EBEBEB;\">100</td><td style=\"padding: 10px; min-width: 60px;border-bottom: 1px solid #EBEBEB;\">90</td><td style=\"padding: 10px; min-width: 60px;border-bottom: 1px solid #EBEBEB;\">44</td><td style=\"padding: 10px; min-width: 60px;border-bottom: 1px solid #EBEBEB;\">0</td></tr></tbody></table></div><div style=\"line-height:auto;text-align: center;\">因裁剪工艺和丈量手法不同，可能存在1~3CM 左右误差，尺码仅供参考，以实物为准</div><style>.detail-modal-body .detail-desc-container .desc .size-detail-box {width: 260px!important;} @media (max-width: 768px) { .size-detail-table { min-width: 400px!important; } } @media (min-width: 768px) { .size-detail-table { min-width: 750px!important; } }</style><p>\n\t胸围90衣长44<span style=\"font-size:60px;\"></span> \n</p>\n<p>\n\t<br />\n</p>\n<p>\n\t<img src=\"//img1.vvic.com/upload/1739798699041_507911.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798699715_130137.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798700204_995021.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798700682_127013.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798701074_473898.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798701449_199904.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798701769_203080.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798702156_568775.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798702521_228031.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798702916_945626.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798703289_585461.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798703581_628130.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798703848_850703.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798704190_74125.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798704524_345999.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798704916_968355.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798705252_361053.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798705608_576198.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798705926_948222.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798706402_514549.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798706684_349001.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798707055_755268.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798707418_595599.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798707749_637982.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1739798707986_725409.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1742473241074_904053.jpg\" alt=\"\" /> \n</p>",
+      "tags": "备货量足,网红爆款,质量保证,来版定制",
+      "item_id": 49363251,
+      "tags_desc": "<p>\n\t这款蕾丝衫/雪纺衫<span style=\"color:red;\">货源稳定，备货量足</span>，可放心出货！参与活动者可提前微信告知档口！\n</p>\n<p>\n\t这款蕾丝衫/雪纺衫是今年爆款，销量好，我们拿了原版打板，款式有保证。\n</p>\n<p>\n\t这款蕾丝衫/雪纺衫拒绝粗制滥造！商品用心选料制作，质量值得信任！\n</p>\n<p>\n\t本档口自设工厂，欢迎来版定做！\n</p>"
+    },
+    "skumap": "5X9sz9++fJmWyqa1S+EOwbtZogejwILWmHaLiW50BzlXHNVX5hh7Tq/jp4d4TMBNFQFHu4ePjFvb/QcxQLviaYggPrl0U0vEaIoNYThVkJvVeggYcBzikmydeKc5STQcJqw+0T+y9W+DZeX+JRRQNQWftng5655YlVaXZZUYX62gUFZ6OQyvZNul+pZNpdoEB6NmB/uEXIy0JfzJMyPuIpDwE0BvFpteQgw21bqTLiXlkNv1pxZbG4fG+enZarAeTILblGKaPEqhuSW3mX9OI+ENsBqU5GW5NMlWCW7nEov5V2X4wqi+It64uBSPIhUbExDwxzpPh8apSvGJ6dc5J5I/1dQHoeKgtwkfrZg1NHa/Usn75PW2h4bBgmVRc4QVdyFhnTRU7/Fgu2+7jEYrn9hVtmWdVmgFZKs5ME6rm9BRk1jlEtdbS6jhTL10pf9qwtErAp04feMvN6ttuWg2zrhtURCAK3fwUH815m1ulVWrE00U5T90kUJTQCmtFqPLf8TvjJ5Z21/V3r3rWWGDaDnCgKBz9rpO1ui5+at0kbR23cphEh7GneBlvb68KhzDadLvXeAI9zonLlNoR/ej8g2oxChhMrl1a/I52r3G7qtkCTBlFrj4damnbY0k1zc/WnlhkcTHjOX9x7JPffLlHafky8rOE4yEfEmETkKR6bbv3sart1pr+dch6kCmMyD/5yMeBZOef7rLNHkDTz2TZhEV4YNW3Fi0Hp4JMrrZirGvzQ8yNh2w68RDogr/DWoCbMMCa7CXgE7joPRDxlPxVW4iSOe4Zl9V4LUDZ/XzRcCJ/hN6Fs4w1RoiYoN1k151+RxcMD1IR6vmALf2Y0UKW3lubpqL6n2WXOgTYU1tBUOVh8XmNqrJmsqBoA93OnVrmggKqhdT1FBVWy4jeJJR1L0aPlxzsmWIT2TSVDIUk4GyrBHpXzMmuJYaSwE7KU01vG1Ekophgjil1zmfIo6EJw4RC+ESPraiBFeoxPl2JicyGdehWqiQfTJQI5uOcV31SBfhvEXp/d3Yo0N0pCP44o/ZD2DbBgbnfwAlZgllPT5VLKgJd1Lc12ROrokqYINkD2GCq+aVnGnQfP1ex565W8N976LsSx6IMjQhOUo9/xas08GR4CdqtKjRUQwh/kGP5Pt97TLVdHKXodXKUZ2WEhNgdfhbPgw8I2ueyoxqzuQ9tUbMdb16JeH1GpcKcJSl3y0rEauFJJsjgk0BOAUM2xzuclUVDBni+L3tI0qK8MKA1KI+CFw2yxXdhltDQA9yF5+4/R4EE7iOFn19CCIZ2J6SfOe6OmCse8j1EiqjWR22FZ6vcecUu8PqKK6qRMaANt7mmsbtmV4qW6b8npXXTlwYxfpLbihYkmIiIJan+4tG3oRmWmpfXDh0o38xVsJ/49PXocllON766PgXMV/yyZDRhvK160+wVU3JYORlcaxYs+RtuZVRmvK7Ht7swTttmKnEqvB7Cgb0A1TT23R+1iN8VHIvNBmhasMYpQiBOlSAGEWSDlSOHqKQFvvrG8m+sr3E5OSDl6M4uJqgXI8v4mjMt+0YKFvmFNhZo2qQVP47SEwF4LVtIlY1Ra8qJvuaF+GX5fLZo9Vqy1x5/WN9T+lkrqstsB/eBsTZqoijNdM/6mm6htdYzsqbW051NI/I2Yn5JV5sP9vKViTH6jIyuw8fl1mikyipaYoGZFXJkrriohXQzbKsKjPNjeMXDIDB2l6zLEgenrZugjpZj7k8lJz4lMvj5/28Vx/pErscoMVjbWdNjTus4ZtesgQcc0jqc9bmTSwIayq1aPbJzeL4C7o7Sb6XTwsL"
+  },
+  "code": 200,
+  "msg": "请求成功"
+}
