@@ -6,13 +6,20 @@ import json
 import uuid
 import time
 import traceback
+import requests
 from typing import List, Dict, Any, Optional, Union
 from datetime import datetime, timedelta
+import base64
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+from PIL import Image, ImageDraw, ImageFont
+import io
+import os
 
 from sqlmodel import Session
 from app.scraper.product_scraper import ProductScraper
 from app.utils.translate import translate_product_info
 from app.utils.ai_detail_generator import generate_product_detail
+from app.utils.image_processing import process_image
 from app.models.product import Product
 from app.models.database import get_db
 from app.utils.templates import get_templates
@@ -365,4 +372,210 @@ def generate_product_detail_page(
         })
     except Exception as e:
         logger.error(f"AI 상품 상세 생성 중 오류 발생: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/{product_id}/image-translate", response_class=HTMLResponse)
+async def product_image_translate(
+    product_id: int,
+    request: Request,
+    db: Session = Depends(get_db)
+):
+    """이미지 번역 생성 페이지를 보여줍니다."""
+    try:
+        product = db.query(Product).filter(Product.id == product_id).first()
+        if not product:
+            raise HTTPException(status_code=404, detail="상품을 찾을 수 없습니다.")
+        
+        return templates.TemplateResponse(
+            "product_image_translate.html",
+            {"request": request, "product": product}
+        )
+    except Exception as e:
+        logger.error(f"이미지 번역 페이지 로드 중 오류 발생: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@retry(
+    stop=stop_after_attempt(3),
+    wait=wait_exponential(multiplier=1, min=1, max=10),
+    retry=retry_if_exception_type((requests.exceptions.RequestException, Exception)),
+    reraise=True
+)
+async def translate_product_image_with_retry(image_data: bytes):
+    """재시도 메커니즘이 있는 이미지 번역 함수"""
+    try:
+        return await process_image(image_data)
+    except Exception as e:
+        logger.error(f"이미지 번역 처리 중 오류 발생 (재시도 예정): {str(e)}")
+        raise
+
+@router.post("/api/product/{product_id}/image/{image_index}/translate")
+async def translate_product_image(
+    product_id: int,
+    image_index: int,
+    db: Session = Depends(get_db)
+):
+    """개별 이미지의 텍스트를 감지하고 번역합니다."""
+    try:
+        product = db.query(Product).filter(Product.id == product_id).first()
+        if not product:
+            raise HTTPException(status_code=404, detail="상품을 찾을 수 없습니다.")
+        
+        if image_index < 0 or image_index >= len(product.images):
+            raise HTTPException(status_code=404, detail="이미지를 찾을 수 없습니다.")
+        
+        image = product.images[image_index]
+        
+        # 이미지 다운로드
+        try:
+            response = requests.get(image["url"], timeout=10)
+            if response.status_code != 200:
+                raise HTTPException(status_code=400, detail="이미지를 다운로드할 수 없습니다.")
+        except requests.exceptions.RequestException as e:
+            logger.error(f"이미지 다운로드 중 오류 발생: {str(e)}")
+            raise HTTPException(status_code=400, detail=f"이미지 다운로드 중 오류 발생: {str(e)}")
+        
+        # 이미지 처리 (재시도 메커니즘 포함)
+        try:
+            result = await translate_product_image_with_retry(response.content)
+            return {
+                "textBlocks": result["textBlocks"],
+                "translatedImage": result["image"]
+            }
+        except Exception as e:
+            logger.error(f"이미지 번역 처리 중 오류 발생: {str(e)}")
+            raise HTTPException(
+                status_code=500, 
+                detail=f"이미지 번역 처리 중 오류 발생: {str(e)}"
+            )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"이미지 번역 처리 중 예상치 못한 오류 발생: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/api/product/{product_id}/image/{image_index}/save")
+async def save_translated_image(
+    product_id: int,
+    image_index: int,
+    image_data: dict,
+    db: Session = Depends(get_db)
+):
+    try:
+        logger.info(f"이미지 저장 시작 - product_id: {product_id}, image_index: {image_index}")
+        logger.debug(f"받은 이미지 데이터 키: {image_data.keys()}")
+        
+        # base64 이미지 데이터 처리
+        image_data_str = image_data.get("image_data", "")
+        if "base64," in image_data_str:
+            image_data_str = image_data_str.split("base64,")[1]
+        
+        try:
+            image_bytes = base64.b64decode(image_data_str)
+            image = Image.open(io.BytesIO(image_bytes))
+        except Exception as e:
+            logger.error(f"이미지 디코딩 오류: {str(e)}")
+            raise HTTPException(status_code=400, detail="잘못된 이미지 데이터 형식입니다.")
+
+        # 편집 가능한 이미지로 변환
+        draw = ImageDraw.Draw(image)
+
+        # 텍스트 블록 처리
+        text_blocks = image_data.get("textBlocks", [])
+        logger.debug(f"처리할 텍스트 블록 수: {len(text_blocks)}")
+        
+        for block in text_blocks:
+            try:
+                if block.get("edited", False):
+                    vertices = block.get("position", [])
+                    if not vertices:
+                        continue
+                        
+                    x = min(v[0] for v in vertices)
+                    y = min(v[1] for v in vertices)
+                    width = max(v[0] for v in vertices) - x
+                    height = max(v[1] for v in vertices) - y
+
+                    # 원본 텍스트 영역을 지우기
+                    draw.rectangle([x, y, x + width, y + height], fill="white")
+
+                    # 새 텍스트 그리기
+                    try:
+                        font_path = "app/static/fonts/NotoSansKR-Regular.ttf"
+                        if os.path.exists(font_path):
+                            font = ImageFont.truetype(font_path, 20)
+                        else:
+                            logger.warning(f"폰트 파일을 찾을 수 없음: {font_path}")
+                            font = ImageFont.load_default()
+                            
+                        text = block.get("text", "")
+                        draw.text((x, y), text, fill="black", font=font)
+                    except Exception as e:
+                        logger.error(f"텍스트 그리기 오류: {str(e)}")
+                        draw.text((x, y), block.get("text", ""), fill="black")
+            except Exception as e:
+                logger.error(f"텍스트 블록 처리 중 오류: {str(e)}")
+                continue
+
+        # 처리된 이미지를 저장
+        save_path = f"app/static/uploads/translated/product_{product_id}"
+        os.makedirs(save_path, exist_ok=True)
+        
+        image_filename = f"image_{image_index}.png"
+        image_path = os.path.join(save_path, image_filename)
+        
+        try:
+            image.save(image_path, format="PNG")
+        except Exception as e:
+            logger.error(f"이미지 저장 오류: {str(e)}")
+            raise HTTPException(status_code=500, detail="이미지 저장 중 오류가 발생했습니다.")
+
+        # 이미지 URL 생성
+        image_url = f"/static/uploads/translated/product_{product_id}/{image_filename}"
+
+        # DB에 번역된 이미지 URL 저장
+        product = db.query(Product).filter(Product.id == product_id).first()
+        if not product:
+            raise HTTPException(status_code=404, detail="상품을 찾을 수 없습니다.")
+
+        if 0 <= image_index < len(product.images):
+            if isinstance(product.images, list):
+                if isinstance(product.images[image_index], dict):
+                    product.images[image_index]["translated_url"] = image_url
+                else:
+                    product.images[image_index] = {"url": product.images[image_index], "translated_url": image_url}
+            db.commit()
+            logger.info(f"이미지 저장 완료: {image_url}")
+
+        return {"success": True, "url": image_url}
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"이미지 저장 중 예상치 못한 오류: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"이미지 저장 중 오류가 발생했습니다: {str(e)}")
+
+@router.post("/api/product/{product_id}/images/save-all")
+async def save_all_translated_images(
+    product_id: int,
+    images_data: dict,
+    db: Session = Depends(get_db)
+):
+    try:
+        saved_images = []
+        for image_index, image_data in images_data.items():
+            try:
+                result = await save_translated_image(
+                    product_id=product_id,
+                    image_index=int(image_index),
+                    image_data={"image_data": image_data},
+                    db=db
+                )
+                saved_images.append(result["url"])
+            except Exception as e:
+                print(f"이미지 {image_index} 저장 중 오류 발생: {str(e)}")
+
+        return {"success": True, "saved_images": saved_images}
+
+    except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

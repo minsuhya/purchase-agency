@@ -1,0 +1,531 @@
+{% extends "base.html" %}
+
+{% block title %}이미지 번역 생성 - {{ product.title_original }}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="mb-6">
+        <nav class="flex" aria-label="breadcrumb">
+            <ol class="flex space-x-2">
+                <li><a href="/" class="text-primary hover:text-primary-dark">홈</a></li>
+                <li class="text-gray-500">/</li>
+                <li><a href="/product/list" class="text-primary hover:text-primary-dark">상품 목록</a></li>
+                <li class="text-gray-500">/</li>
+                <li><a href="/product/{{ product.id }}" class="text-primary hover:text-primary-dark">{{ product.title_original }}</a></li>
+                <li class="text-gray-500">/</li>
+                <li class="text-gray-700">이미지 번역 생성</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="max-w-5xl mx-auto">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold">이미지 번역 생성</h1>
+                <div class="space-x-2">
+                    <button id="save-all" class="bg-success hover:bg-success-dark text-white px-4 py-2 rounded-md transition duration-200">
+                        모든 이미지 저장
+                    </button>
+                    <a href="/product/{{ product.id }}" class="inline-block bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition duration-200">
+                        돌아가기
+                    </a>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                {% for image in product.images %}
+                <div class="image-editor border rounded-lg p-6" id="image-editor-{{ loop.index0 }}" data-image-index="{{ loop.index0 }}">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-semibold">이미지 #{{ loop.index }}</h2>
+                        <button class="save-image bg-success hover:bg-success-dark text-white px-4 py-2 rounded-md transition duration-200" data-image-index="{{ loop.index0 }}">
+                            이미지 저장
+                        </button>
+                    </div>
+
+                    <div class="bg-blue-50 p-4 rounded-md mb-4">
+                        <p class="font-medium mb-2">편집 방법:</p>
+                        <ol class="list-decimal list-inside space-y-1">
+                            <li>번역된 텍스트 위치를 클릭하여 편집할 수 있습니다.</li>
+                            <li>모든 편집이 완료되면 '이미지 저장' 버튼을 클릭하세요.</li>
+                        </ol>
+                    </div>
+
+                    <div class="image-container">
+                        <div id="translated-image-{{ loop.index0 }}" class="relative">
+                            <div class="image-canvas relative">
+                                <img src="{{ image.url }}" alt="{{ image.alt }}" class="max-w-full rounded-lg translated-image" data-image-index="{{ loop.index0 }}">
+                            </div>
+                            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 loading-overlay">
+                                <div class="text-center">
+                                    <div id="loading-{{ loop.index0 }}" class="loading hidden mb-4">
+                                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+                                        <span class="ml-2 text-white">이미지 처리 중...</span>
+                                    </div>
+                                    <button class="process-image bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-md transition duration-200" data-image-index="{{ loop.index0 }}">
+                                        번역 시작
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 텍스트 편집 모달 백드롭 -->
+<div id="text-editor-backdrop" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40 hidden"></div>
+
+<!-- 텍스트 편집 모달 -->
+<div id="text-editor" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-2xl p-6 z-50 hidden w-[90%] max-w-lg">
+    <div class="space-y-4">
+        <div>
+            <label for="original-text" class="block text-sm font-medium text-gray-700 mb-2">
+                원본 텍스트 (중국어)
+            </label>
+            <input type="text" id="original-text" readonly class="block w-full px-4 py-2 rounded-md border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-primary focus:border-transparent" />
+        </div>
+        <div>
+            <label for="translated-text" class="block text-sm font-medium text-gray-700 mb-2">
+                번역된 텍스트 (한국어)
+            </label>
+            <input type="text" id="translated-text" class="block w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent" />
+        </div>
+        <div class="flex justify-end space-x-3 pt-4">
+            <button id="cancel-edit" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md transition duration-200">
+                취소
+            </button>
+            <button id="save-edit" class="px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-md transition duration-200">
+                저장
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+    .image-container {
+        position: relative;
+        margin-top: 20px;
+        overflow: hidden;
+        border-radius: 0.5rem;
+    }
+    .image-canvas {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+    }
+    .text-overlay {
+        position: absolute;
+        border: 2px dashed #ff0000;
+        background-color: rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+        padding: 4px;
+        font-size: 14px;
+        line-height: 1.2;
+        word-break: break-all;
+        min-width: 24px;
+        min-height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        transition: all 0.2s ease;
+    }
+    .text-overlay:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+        transform: scale(1.02);
+    }
+    .text-overlay.edited {
+        background-color: rgba(144, 238, 144, 0.5);
+        border: 2px dashed #22c55e;
+    }
+    .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+    .loading-overlay {
+        transition: opacity 0.3s ease;
+    }
+    .image-editor {
+        transition: all 0.3s ease;
+    }
+    .image-editor:hover {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 전역 변수
+    let textBlocks = {};
+    let currentEditingBlock = null;
+    let currentImageIndex = null;
+    let imageScales = {};
+
+    // DOM 요소들
+    const textEditor = document.getElementById("text-editor");
+    const textEditorBackdrop = document.getElementById("text-editor-backdrop");
+    const originalText = document.getElementById("original-text");
+    const translatedText = document.getElementById("translated-text");
+    const saveEdit = document.getElementById("save-edit");
+    const cancelEdit = document.getElementById("cancel-edit");
+
+    // 이미지 크기 조정에 따른 오버레이 위치 조정
+    function adjustOverlays(imageIndex) {
+        const imageCanvas = document.querySelector(`#translated-image-${imageIndex} .image-canvas`);
+        const img = imageCanvas.querySelector('img');
+        
+        if (img) {
+            const scale = img.width / img.naturalWidth;
+            imageScales[imageIndex] = scale;
+
+            const overlays = imageCanvas.querySelectorAll('.text-overlay');
+            overlays.forEach(overlay => {
+                const blockId = overlay.getAttribute('data-id');
+                const block = textBlocks[imageIndex]?.find(b => b.id === parseInt(blockId));
+                if (block) {
+                    updateOverlayPosition(overlay, block, scale);
+                }
+            });
+        }
+    }
+
+    // 오버레이 위치 업데이트
+    function updateOverlayPosition(overlay, block, scale) {
+        const vertices = block.position;
+        const x = Math.min(...vertices.map(v => v[0])) * scale;
+        const y = Math.min(...vertices.map(v => v[1])) * scale;
+        const width = (Math.max(...vertices.map(v => v[0])) - Math.min(...vertices.map(v => v[0]))) * scale;
+        const height = (Math.max(...vertices.map(v => v[1])) - Math.min(...vertices.map(v => v[1]))) * scale;
+
+        const minSize = 24;
+        const scaledWidth = Math.max(width, minSize);
+        const scaledHeight = Math.max(height, minSize);
+
+        overlay.style.left = `${x}px`;
+        overlay.style.top = `${y}px`;
+        overlay.style.width = `${scaledWidth}px`;
+        overlay.style.height = `${scaledHeight}px`;
+        overlay.style.fontSize = `${Math.max(14, Math.min(scaledWidth / 10, 20))}px`;
+    }
+
+    // 이미지 로드 이벤트 리스너
+    document.querySelectorAll('.translated-image').forEach(img => {
+        img.addEventListener('load', function() {
+            const imageIndex = parseInt(this.dataset.imageIndex);
+            if (!isNaN(imageIndex)) {
+                adjustOverlays(imageIndex);
+            }
+        });
+    });
+
+    // 텍스트 오버레이 생성
+    function createTextOverlays(imageIndex) {
+        const imageCanvas = document.querySelector(`#translated-image-${imageIndex} .image-canvas`);
+        const img = imageCanvas.querySelector('img');
+        
+        if (!img || !textBlocks[imageIndex]) return;
+        
+        // 이미지의 실제 크기와 표시 크기를 기준으로 스케일 계산
+        const scale = img.width / img.naturalWidth;
+        imageScales[imageIndex] = scale;
+        
+        // 기존 오버레이 제거
+        const overlays = imageCanvas.querySelectorAll(".text-overlay");
+        overlays.forEach((overlay) => overlay.remove());
+        
+        // 새로운 오버레이 생성
+        textBlocks[imageIndex].forEach((block) => {
+            const overlay = document.createElement("div");
+            overlay.className = "text-overlay";
+            overlay.style.position = "absolute";
+            overlay.style.border = "1px dashed red";
+            if (block.edited) {
+                overlay.classList.add("edited");
+            }
+            overlay.setAttribute("data-id", block.id);
+            
+            updateOverlayPosition(overlay, block, scale);
+            overlay.textContent = block.text;
+            
+            overlay.addEventListener("click", () => openTextEditor(imageIndex, block.id));
+            
+            imageCanvas.appendChild(overlay);
+        });
+    }
+
+    // 이미지 처리 버튼 클릭 이벤트
+    document.querySelectorAll('.process-image').forEach(button => {
+        button.addEventListener('click', async function() {
+            const imageIndex = this.dataset.imageIndex;
+            const loading = document.getElementById(`loading-${imageIndex}`);
+            const loadingOverlay = this.closest('.loading-overlay');
+            
+            this.style.display = 'none';
+            loading.classList.remove('hidden');
+            
+            try {
+                const response = await fetch(`/product/api/product/{{ product.id }}/image/${imageIndex}/translate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('이미지 처리 중 오류가 발생했습니다.');
+                }
+                
+                const data = await response.json();
+                
+                if (!data.textBlocks || data.textBlocks.length === 0) {
+                    loadingOverlay.innerHTML = `
+                        <div class="text-center text-white">
+                            <p class="mb-4">중국어 텍스트가 없습니다.</p>
+                            <button disabled class="bg-gray-500 text-white px-4 py-2 rounded-md opacity-50 cursor-not-allowed">
+                                원본 이미지 사용
+                            </button>
+                        </div>
+                    `;
+                    return;
+                }
+
+                console.log("data.textBlocks: ", data.textBlocks);
+                
+                textBlocks[imageIndex] = data.textBlocks.map((block, index) => ({
+                    ...block,
+                    id: index,
+                    edited: false,
+                    text: block.translated
+                }));
+                
+                const img = document.querySelector(`#translated-image-${imageIndex} img`);
+                img.src = data.translatedImage;
+                
+                img.onload = () => {
+                    const scale = img.width / img.naturalWidth;
+                    imageScales[imageIndex] = scale;
+                    createTextOverlays(imageIndex);
+                    loadingOverlay.style.display = 'none';
+                };
+                
+            } catch (error) {
+                console.error('이미지 처리 오류:', error);
+                loadingOverlay.innerHTML = `
+                    <div class="text-center text-white">
+                        <p class="mb-4">오류가 발생했습니다.</p>
+                        <button class="process-image bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-md transition duration-200" data-image-index="${imageIndex}">
+                            다시 시도
+                        </button>
+                    </div>
+                `;
+            }
+        });
+    });
+
+    // 텍스트 편집기 열기
+    function openTextEditor(imageIndex, blockId) {
+        currentImageIndex = imageIndex;
+        currentEditingBlock = textBlocks[imageIndex].find((block) => block.id === blockId);
+        
+        if (currentEditingBlock) {
+            originalText.value = currentEditingBlock.original;
+            translatedText.value = currentEditingBlock.text;
+            
+            textEditorBackdrop.classList.remove('hidden');
+            textEditor.classList.remove('hidden');
+            
+            translatedText.focus();
+            translatedText.select();
+        }
+    }
+
+    // 텍스트 편집기 닫기
+    function closeTextEditor() {
+        textEditorBackdrop.classList.add('hidden');
+        textEditor.classList.add('hidden');
+    }
+
+    // 텍스트 편집 저장
+    saveEdit.addEventListener("click", () => {
+        if (currentEditingBlock && currentImageIndex !== null) {
+            currentEditingBlock.text = translatedText.value;
+            currentEditingBlock.edited = true;
+            
+            const overlay = document.querySelector(
+                `#translated-image-${currentImageIndex} .text-overlay[data-id="${currentEditingBlock.id}"]`
+            );
+            if (overlay) {
+                overlay.textContent = currentEditingBlock.text;
+                overlay.classList.add("edited");
+            }
+            
+            closeTextEditor();
+        }
+    });
+
+    // 텍스트 편집 취소
+    cancelEdit.addEventListener("click", closeTextEditor);
+    textEditorBackdrop.addEventListener("click", closeTextEditor);
+    
+    // ESC 키로 모달 닫기
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            closeTextEditor();
+        }
+    });
+
+    // 이미지 크기 변경 감지
+    window.addEventListener('resize', () => {
+        Object.keys(textBlocks).forEach(imageIndex => {
+            adjustOverlays(parseInt(imageIndex));
+        });
+    });
+
+    // 개별 이미지 저장
+    document.querySelectorAll('.save-image').forEach(button => {
+        button.addEventListener('click', async function() {
+            const imageIndex = this.dataset.imageIndex;
+            const translatedImage = document.querySelector(`#translated-image-${imageIndex} img`).src;
+            const currentTextBlocks = textBlocks[imageIndex] || [];
+            
+            try {
+                this.disabled = true;
+                this.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2"></div>
+                        저장 중...
+                    </div>
+                `;
+                
+                const response = await fetch(`/product/api/product/{{ product.id }}/image/${imageIndex}/save`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        image_data: translatedImage,
+                        textBlocks: currentTextBlocks
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('이미지 저장 중 오류가 발생했습니다.');
+                }
+                
+                const result = await response.json();
+                if (result.success) {
+                    this.textContent = '저장됨';
+                    this.classList.remove('bg-success');
+                    this.classList.add('bg-gray-500');
+                    
+                    setTimeout(() => {
+                        this.textContent = '이미지 저장';
+                        this.disabled = false;
+                        this.classList.remove('bg-gray-500');
+                        this.classList.add('bg-success');
+                    }, 2000);
+                }
+                
+            } catch (error) {
+                console.error('이미지 저장 오류:', error);
+                this.textContent = '저장 실패';
+                this.classList.add('bg-danger');
+                
+                setTimeout(() => {
+                    this.textContent = '이미지 저장';
+                    this.disabled = false;
+                    this.classList.remove('bg-danger');
+                    this.classList.add('bg-success');
+                }, 2000);
+            }
+        });
+    });
+
+    // 모든 이미지 저장
+    document.getElementById('save-all').addEventListener('click', async function() {
+        try {
+            this.disabled = true;
+            this.innerHTML = `
+                <div class="flex items-center">
+                    <div class="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2"></div>
+                    저장 중...
+                </div>
+            `;
+            
+            const imagesData = {};
+            document.querySelectorAll('.translated-image').forEach((img, index) => {
+                if (textBlocks[index] && textBlocks[index].length > 0) {
+                    imagesData[index] = {
+                        image_data: img.src,
+                        textBlocks: textBlocks[index]
+                    };
+                }
+            });
+            
+            const response = await fetch(`/product/api/product/{{ product.id }}/images/save-all`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    images_data: imagesData
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error('이미지 저장 중 오류가 발생했습니다.');
+            }
+            
+            const result = await response.json();
+            if (result.success) {
+                this.textContent = '모든 이미지 저장됨';
+                this.classList.remove('bg-success');
+                this.classList.add('bg-gray-500');
+                
+                document.querySelectorAll('.save-image').forEach(button => {
+                    button.textContent = '저장됨';
+                    button.disabled = true;
+                    button.classList.remove('bg-success');
+                    button.classList.add('bg-gray-500');
+                });
+                
+                setTimeout(() => {
+                    this.textContent = '모든 이미지 저장';
+                    this.disabled = false;
+                    this.classList.remove('bg-gray-500');
+                    this.classList.add('bg-success');
+                    
+                    document.querySelectorAll('.save-image').forEach(button => {
+                        button.textContent = '이미지 저장';
+                        button.disabled = false;
+                        button.classList.remove('bg-gray-500');
+                        button.classList.add('bg-success');
+                    });
+                }, 2000);
+            }
+            
+        } catch (error) {
+            console.error('이미지 저장 오류:', error);
+            this.textContent = '저장 실패';
+            this.classList.add('bg-danger');
+            
+            setTimeout(() => {
+                this.textContent = '모든 이미지 저장';
+                this.disabled = false;
+                this.classList.remove('bg-danger');
+                this.classList.add('bg-success');
+            }, 2000);
+        }
+    });
+});
+</script>
+{% endblock %}

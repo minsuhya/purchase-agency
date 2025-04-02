@@ -11,6 +11,8 @@ class ProductImage(SQLModel, table=False):
     """상품 이미지 모델"""
     url: str = Field(sa_type=String(1000))
     alt: Optional[str] = Field(default=None, sa_type=String(200))
+    translated_url: Optional[str] = Field(default=None, sa_type=String(1000))
+    id: Optional[int] = Field(default=None, primary_key=True)
 
 class ProductOption(SQLModel, table=False):
     """상품 옵션 모델"""

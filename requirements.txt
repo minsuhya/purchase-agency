@@ -12,3 +12,8 @@ Pillow
 python-multipart
 openai
 loguru
+google-cloud-vision
+google-cloud-translate
+python-jose
+setuptools>=65.5.1
+tenacity>=8.0.1 

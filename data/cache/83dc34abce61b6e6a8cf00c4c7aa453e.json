@@ -1,0 +1,327 @@
+{
+  "data": {
+    "id": 50108864,
+    "vid": "67de74aca9172100088b39e8",
+    "tid": null,
+    "sid": null,
+    "vcid": 20000106,
+    "tcid": "50010850",
+    "title": "원본 스팟 웨이브 포인트 슬링 드레스 둥근 목 다시 열기 스티칭 허리 슬림 치마",
+    "attrs": "颜色:杏色波点,尺码:S M L,材质成分:聚酯纤维/涤纶100%,制造方法:梭织,风格:甜美,裙长:长裙,廓形:,袖长:,袖型:,面料:,裙型:,图案:波点,流行元素/工艺:印花,衣门襟:套头,适用季节:夏季,货号:37347,组合形式:单件,上市年份季节:2025年夏季",
+    "style": "甜美",
+    "season": null,
+    "color": "杏色波点",
+    "size": "S,M,L",
+    "imgs": "//img1.vvic.com/upload/1710597819844_475256.jpg,//img1.vvic.com/upload/1710597822535_714619.jpg,//img1.vvic.com/upload/1710597824995_629720.jpg,//img1.vvic.com/upload/1710597828927_474698.jpg,//img1.vvic.com/upload/1710597846189_248853.jpg,//img1.vvic.com/upload/1710597942451_133800.jpg",
+    "status": 1,
+    "recommend": 0,
+    "showcase": 0,
+    "spam": 0,
+    "discountType": null,
+    "sales": 1,
+    "isOld": null,
+    "pname": "女装",
+    "isSpMessageType": 0,
+    "itemType": 0,
+    "promotionType": null,
+    "discountPrice": "",
+    "originPrice": "",
+    "price": "",
+    "isSelfItem": null,
+    "deliveryTime": "48시간이내발송",
+    "deliveryTimeTips": "상품은주문후48시간이내발송이내에준비됩니다.만약상품에예약주문SKU가포함되어있으면,예약주문이끝난후48시간이내발송이내에준비됩니다.주문에여러상품이포함된경우전체배송시간이연장될수있습니다.",
+    "callSameStyleReason": null,
+    "earlyWarning4Order": null,
+    "goodsInStock": 0,
+    "goodsInStockDate": "04月04日",
+    "shippingMethodText": "<span>배송대행서비스는VVIC에서제공합니다.</sapn>",
+    "ladderPriceRule": null,
+    "ladderPriceRuleMap": "null",
+    "isFavoriteItem": 0,
+    "breadCrumbs": [
+      {
+        "name": "首页",
+        "url": "https://www.vvic.com/"
+      },
+      {
+        "name": "女装",
+        "url": "https://www.vvic.com/gz/list/set-1_0_0-0-0-0-0/"
+      },
+      {
+        "name": "裙装",
+        "url": "https://www.vvic.com/gz/list/set-1_101_0-0-0-0-0/"
+      },
+      {
+        "name": "连衣裙",
+        "url": "https://www.vvic.com/gz/list/set-1_101_20000106-0-0-0-0/"
+      }
+    ],
+    "isTheft": 0,
+    "isSupportPangge": 1,
+    "panggePunishment": null,
+    "iv": "vvicItem",
+    "rankingList": null,
+    "itemUploadConf": {
+      "unableChannels": null,
+      "limitPrompt": {
+        "limit": false,
+        "reason": "非实拍",
+        "bubbleMsg": "商品不支持上传速卖通，请下载图片或找同款"
+      }
+    },
+    "platformService": {
+      "list": [
+        {
+          "serviceTitle": "환불",
+          "serviceName": "환불",
+          "serviceDesc": "상점약속:단종되지않았고,특가또는시즌오프상품이아니며,재판매에영향을미치지않는경우현금환불을신청할수있습니다.VVIC는현금환불결과에책임을지지않으니,특히아래와같은상황에서는사전에상점에확인해주시기바랍니다:\r\n1 .택배를상점으로반송하다;\r\n2 . 특별한시기(예:설연휴전,더블11);\r\n3 . 판매기간이너무긴경우(15일초과);\r\n4 . 수량이너무많은경우(10개초과)."
+        },
+        {
+          "serviceTitle": "품질검사보험",
+          "serviceName": "품질검사보험",
+          "serviceDesc": "VVIC대행상품을주문할때【고급품질검사】서비스를선택하면,VVIC가【품질검사보험】을제공하여【고급품질검사】서비스를보증합니다.만약【고급품질검사】항목과관련된문제가발생할경우,VVIC는해당상품의모든서비스비용을상점에보상할것을약속합니다."
+        },
+        {
+          "serviceTitle": "반품보장",
+          "serviceName": "반품보장",
+          "serviceDesc": "VVIC대행상품을이용하면VVIC의【반품보장】서비스를받을수있습니다.발송후9일이내에반품을신청할수있으며,반품실패시VVIC가제공하는【반품실패보상금액】으로상계하여상품의실제주문금액을상점에환불해드립니다.다른반품실패주문에대해서는플랫폼에서반품수수료를면제합니다.반품실패상품에대해서는VVIC가반품수수료를면제하고,운임쿠폰형태로보상하여시스템에서자동으로발급됩니다."
+        },
+        {
+          "serviceTitle": "반품가격보장",
+          "serviceName": "반품가격보장",
+          "serviceDesc": "VVIC대행상품을이용하면VVIC의【반품가격보장】서비스를받을수있습니다.상점주가【수령후3일이내】에반품을신청하면,상품가격이인하되거나인상되었더라도VVIC는반품가격을주문당시의가격과일치하도록보장합니다."
+        }
+      ],
+      "indexImg": "http://img.vvic.com/img/1648468883539_105330.png"
+    },
+    "systemRecognizeLogoFlag": null,
+    "itemStaffOfficer": {
+      "moduleName": null,
+      "dim": [
+        {
+          "title": "30天",
+          "checked": 1,
+          "groupedStatistics": [
+            [
+              {
+                "key": "timelyShipRate48h",
+                "name": "48小时发货率",
+                "value": "100%"
+              },
+              {
+                "key": "avgShipTime",
+                "name": "平均发货时长",
+                "value": "3小时"
+              },
+              {
+                "key": "salesNum",
+                "name": "销量",
+                "value": "1"
+              },
+              {
+                "key": "payNum",
+                "name": "支付件数",
+                "value": "1"
+              },
+              {
+                "key": "distriNum",
+                "name": "上款量",
+                "value": "44"
+              },
+              {
+                "key": "favNum",
+                "name": "收藏量",
+                "value": "8"
+              }
+            ],
+            []
+          ]
+        },
+        {
+          "title": "90天",
+          "checked": 0,
+          "groupedStatistics": [
+            [
+              {
+                "key": "timelyShipRate48h",
+                "name": "48小时发货率",
+                "value": "100%"
+              },
+              {
+                "key": "avgShipTime",
+                "name": "平均发货时长",
+                "value": "3小时"
+              },
+              {
+                "key": "salesNum",
+                "name": "销量",
+                "value": "1"
+              },
+              {
+                "key": "payNum",
+                "name": "支付件数",
+                "value": "1"
+              },
+              {
+                "key": "distriNum",
+                "name": "上款量",
+                "value": "44"
+              },
+              {
+                "key": "favNum",
+                "name": "收藏量",
+                "value": "8"
+              }
+            ],
+            []
+          ]
+        },
+        {
+          "title": "累计",
+          "checked": 0,
+          "groupedStatistics": [
+            [
+              {
+                "key": "timelyShipRate48h",
+                "name": "48小时发货率",
+                "value": "100%"
+              },
+              {
+                "key": "avgShipTime",
+                "name": "平均发货时长",
+                "value": "3小时"
+              },
+              {
+                "key": "salesNum",
+                "name": "销量",
+                "value": "1"
+              },
+              {
+                "key": "payNum",
+                "name": "支付件数",
+                "value": "1"
+              },
+              {
+                "key": "distriNum",
+                "name": "上款量",
+                "value": "44"
+              },
+              {
+                "key": "favNum",
+                "name": "收藏量",
+                "value": "8"
+              }
+            ],
+            []
+          ]
+        }
+      ]
+    },
+    "itemRecentTrends": null,
+    "sloganList": [
+      {
+        "slogan": "48小时内发货",
+        "bgColor": "#FFFFFF",
+        "strokeColor": "#998263",
+        "textColor": "#998263",
+        "hover": null
+      },
+      {
+        "slogan": "可退货",
+        "bgColor": "#FFFFFF",
+        "strokeColor": "#998263",
+        "textColor": "#998263",
+        "hover": null
+      }
+    ],
+    "shopRefundStatement": null,
+    "isFirstLaunch": null,
+    "bargainFlag": 1,
+    "noSupportDesc": null,
+    "isShopOwner": 0,
+    "isSaleOff": 0,
+    "saleOffAmount": "",
+    "recommend_id": null,
+    "upload_type": null,
+    "shop_id": 40076,
+    "city_market_id": 1,
+    "city_market_code": "gz",
+    "discount_value": null,
+    "active_price": null,
+    "sku_min_price": null,
+    "sku_max_price": null,
+    "price_type": 1,
+    "art_no": "37347",
+    "attrs_json": {
+      "图案": "波点",
+      "货号": "37347",
+      "裙型": "",
+      "颜色": "杏色波点",
+      "廓形": "",
+      "袖型": "",
+      "面料": "",
+      "衣门襟": "套头",
+      "尺码": "S M L",
+      "制造方法": "梭织",
+      "上市年份季节": "2025年夏季",
+      "组合形式": "单件",
+      "裙长": "长裙",
+      "袖长": "",
+      "材质成分": "聚酯纤维/涤纶100%",
+      "风格": "甜美",
+      "适用季节": "夏季",
+      "流行元素/工艺": "印花"
+    },
+    "color_id": "1627207:9999892",
+    "color_pics": [
+      "//img1.vvic.com/upload/1710597983121_847817.jpg"
+    ],
+    "size_id": "20509:224,20509:225,20509:226",
+    "index_img_url": "//img1.vvic.com/upload/1710597819844_475256.jpg",
+    "video_url": "https://video3.vvic.com/prod/transcode/vvic22417ffd28e7ee7f1a4c48639aff397d.mp4",
+    "video_img_url": "//img1.vvic.com/upload/1710598389382_149975.jpg",
+    "pangge_flag": 1,
+    "merge_flag": 0,
+    "status_tb": null,
+    "status_flag": null,
+    "video_flag": 1,
+    "is_active": null,
+    "is_special_offer": 0,
+    "is_pre_sell": 0,
+    "is_pre_sell_edit": null,
+    "is_tx": 1,
+    "is_sp": 0,
+    "is_sp_front": 105,
+    "is_sp_manual": null,
+    "is_lack": 0,
+    "is_ad": null,
+    "ad_score": null,
+    "desc_img_num": 15,
+    "up_time": "2025-03-22 16:28:28",
+    "expired_time": null,
+    "up_shelf_time": null,
+    "last_update_time": null,
+    "service_promise": 0,
+    "fake_flag": 0,
+    "model_id": null,
+    "sale_type": 0,
+    "cur_total_df_sale": 1,
+    "cur_upload_num": 44,
+    "cur_fav_item_num": 8,
+    "is_deleted": 0,
+    "support_cart": null,
+    "show_item_biz_rate": 1,
+    "discount_price": "",
+    "theft_item_id": null,
+    "protect_status": 0,
+    "item_desc": {
+      "desc": "<p style=\"text-align:center;\">\n\t尺寸：cm<img src=\"//img1.vvic.com/upload/1710598020426_53577.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1710598030983_14140.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1710598042068_109139.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1710598052540_444872.jpg\" alt=\"\" /> \n</p>\n<p style=\"text-align:center;\">\n\t<img src=\"//img1.vvic.com/upload/1710598072811_342915.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1710598073539_444935.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1710598074152_754568.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1710598074715_47994.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1710598075413_593179.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1710598075927_572462.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1710598076345_807045.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1710598076611_953751.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1710598076956_614437.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1710598077235_926316.jpg\" alt=\"\" /><img src=\"//img1.vvic.com/upload/1710598077514_802664.jpg\" alt=\"\" /> \n</p>",
+      "tags": "",
+      "item_id": 50108864,
+      "tags_desc": ""
+    },
+    "skumap": "5X9sz9++fJmWyqa1S+EOwbtZogejwILWmHaLiW50BzmYAAPadJ24E2mv6Xt1GEi6gaU9TTciXtK9CBJSUGYhR6Yr89eoGEX+J1g+/GlC6k0+IC6yEbxGbzzRWqP6kkNODIqUVKlcMCC3zhHWthtIFX0bs0hM8NioKazsCZu0YF9NO5TuW6wCLgu0u8DcOT6tj60MqReAMqIwguXH9UEH4u6LOphSpxdMcjMm9FHJthaQZwiQ3UyPFsTLy1MIEoE4Ji6hAmDnsYlc5QyEkWVdXjK8nJwcbayT0wUu14TBGYaVhPZkAaF7H+k60VSSg88r+HYWQXGWgP1agS3EbuWpyXWZdl7hygUsSWfI8W1zUCAVraCgHVRWBlXLACLdRGd6QafrMTt4NgiC3ooJwY2So29y1BgkzZRdwHqZmie+tyczkLi9Ut9xmdI9e7WHdI0QxzgoU3BXY047UjsZlIQ0uSvRdI3bqIkDwadsr5dvNyTH0dYRtY90DJR8SPAUYcbSuF7PqjNG6XY0BkME97z8sz8aMfbKB/WepaYItF72FSmXTZQYCMvcTZRi8c2iKpI0DsX9xERtrxfUM0WyrZ4P4uW96vtwyK/tW0b2eYfMQWK5KLzlkZNIZA4rT6I2y5WuUrZ/bsTT3HW/A6SD28wSMdMKwnIUXPGZEQ+xzE3v5hsq+9Xk59G1Uqx0RkzqbMlCJ2dEwl9Z3mfDMBEM6bqbyEOIt2oipD9glET5CEfL345xvDuPzfKJFMHHTL1O1CPT8dIbH7esXgNQSRUPGe1sF4PWPiUD3ipTo2haCl0SGOlAJ5UOnNLCGEI8zM4bagCy1kLut6zh/Z8ZGUvQhrB7gh5YNJBtpIlbHpuSF0tLYCEG+hpeecuGDMFpS3B8CjY1pycWPzxR6WXtzC6/YJ9U8ZFFOr4qTvChEfBC2qyavVwAiQ8/j3JVVP71DHahPi+SBb77AnG9X2k/xgiAloPfoDbET8YepYxz0Zy4GrSAEU9hZo826cMs65B1GDM0MZAW8d7PP06h/QVdr0r8KRDYSP+fJzprVyntBy1/bEwj4sKSyAiKiaeyl8ySXliKPzedZXV22M2RBQ3mEuRzlc7EA/CSPFfCtsJqpXQLbLLOQjYANb4xJe+i2QbXoZXZtLMFURhqxXQrw1GynNxawJYeskdsyqs1rOCHGJxyyuD2lRaL6GdobOCzBHZ1Jlt/xFPDAdwer6y5/XIsO6V5aS6yAw1Mb04ZbSLgPgT167epCkrm0yftmlqm8+0/whqmqdEIR5aKVJR1D4tCh30prxECKkT//2BS7aexH4IfhL15KyRVLH67at8yExHvae+UW1hHddxET1k07QUuvxrB1UIltorsNwsgC8lOhKENnw2Mc0HlSy9Td9V765gXWAQMmTxMo8VS9jD//ASxuap8EJNtR3iEr0YrPC+poBjNiO6VFSODGdgW6L907QHcyWuOb4vpcOmCuiQ8ZyXDa2bky5n9dsMpvE6aFTfyLDmsQ18uAmPLqPX4qIB1BOvSmD7lKT/QgzXkw3n0+F2gDuhNjd3oledTug4xj0RYiCCdr0uebXL3QTe6HQtNc/wQiHxXjb2X3dt0gZr8IDYieIzAk3bqkU5Q9IvLJffqR61zNgldxg8/9mxCpk/+qRsckF/IgzDuyhcU+GRkrYSE4IanmSgjFyAwD1NvxcltmOMDSCEQz1eX9BMNhduJRmmXzVmbdihMFoWa45ZXY4wzwlu8dc/HaDzzsfrxfJVnlgn94Ah6SzHKDag7h8iaGzBZu9zHX8iRwsIyc6ztTIJsnZVTMLxH7BRsBBFjdx7IIr6U6A2e2Xw="
+  },
+  "code": 200,
+  "msg": "请求成功"
+}
