@@ -60,6 +60,6 @@ logs/
 Thumbs.db 
 
 ezyops-vision-370bc6081f03.json
-data/database.sqlite
-data/cache/
-app/static/uploads/
+database.sqlite
+data/cache
+app/static/uploads
